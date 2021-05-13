@@ -1,5 +1,4 @@
-from usefulFunctions import clearMenuWindow, clearGameWindow, createField, howManyMines, howManyZero, whatIsColor, \
-    openMyAccount
+from usefulFunctions import clearMenuWindow, clearGameWindow, createField, howManyMines, howManyZero, whatIsColor
 from tkinter import Label, Button, Entry, END, StringVar, messagebox
 
 
@@ -20,19 +19,17 @@ class CreateFrame:
     def rightButton(self, numRow, numCol):
         if self.allBtn[numRow - 1][numCol]["bg"] == "green":
             self.minesInFiledCopy += 1
-            self.countClick -= 1
             self.allBtn[numRow - 1][numCol]["bg"] = self.origColor
 
         elif self.allBtn[numRow - 1][numCol]['text'] == '     ' and \
                 self.allBtn[numRow - 1][numCol]["state"] == "normal":
             self.allBtn[numRow - 1][numCol]["bg"] = "green"
             self.minesInFiledCopy -= 1
-            self.countClick += 1
         self.amountMinesLabel.configure(text=f'{self.minesInFiledCopy}')
         self.isWinning()
 
     def isWinning(self):
-        if self.countClick == self.buttonInRows * self.buttonInColumns:
+        if self.countClick == (self.buttonInRows * self.buttonInColumns) - self.minesInFiled:
             Label(self.root, text="You won!", bg='gainsboro').grid(columnspan=self.buttonInColumns)
             for i in range(0, self.buttonInRows):
                 for j in range(self.buttonInColumns):
@@ -108,6 +105,8 @@ class CreateFrame:
                 self.buttonInColumns = int(args[2].get())
                 if int(args[3].get()) > int(args[1].get()) * int(args[2].get()):
                     self.minesInFiled = int(args[1].get()) * int(args[2].get()) - 1
+                else:
+                    self.minesInFiled = int(args[3].get())
             else:
                 # Label(self.root, text='Invalid input (width & height min 4)', fg='red').grid(row=7, columnspan=3)
                 messagebox.showerror('Invalid input', 'width & height min 4')
