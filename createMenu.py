@@ -36,7 +36,7 @@ class CreateFrame:
                     self.allBtn[i][j]["state"] = "disabled"
 
     def identifyButton(self, numRow, numCol):
-        if self.allBtn[numRow - 1][numCol]['bg'] != 'green':
+        if self.allBtn[numRow - 1][numCol]['bg'] != 'green' and self.allBtn[numRow - 1][numCol]['bg'] == self.origColor:
             if self.minesWeeperField[numRow][numCol + 1] == 1:
                 for i in range(1, self.buttonInRows + 1):
                     for j in range(self.buttonInColumns):
@@ -54,7 +54,7 @@ class CreateFrame:
                 self.countClick = 0
                 for i in range(0, self.buttonInRows):
                     for j in range(self.buttonInColumns):
-                        if self.allBtn[i][j]["bg"] != self.origColor:
+                        if self.allBtn[i][j]["bg"] == "gainsboro":
                             self.countClick += 1
                 return
             self.allBtn[numRow - 1][numCol].configure(text=f"{amount}")
@@ -108,7 +108,6 @@ class CreateFrame:
                 else:
                     self.minesInFiled = int(args[3].get())
             else:
-                # Label(self.root, text='Invalid input (width & height min 4)', fg='red').grid(row=7, columnspan=3)
                 messagebox.showerror('Invalid input', 'width & height min 4')
                 self.root.destroy()
         self.minesInFiledCopy = self.minesInFiled

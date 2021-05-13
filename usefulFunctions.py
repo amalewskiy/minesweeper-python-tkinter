@@ -1,6 +1,5 @@
 from random import randint
 from tkinter import Button
-import webbrowser
 
 
 def clearMenuWindow(root):
