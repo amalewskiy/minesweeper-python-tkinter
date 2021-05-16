@@ -17,16 +17,16 @@ class CreateFrame:
         self.amountMinesLabel = Label()
 
     def rightButton(self, numRow, numCol):
-        if self.allBtn[numRow - 1][numCol]["bg"] == "green":
-            self.minesInFiledCopy += 1
-            self.allBtn[numRow - 1][numCol]["bg"] = self.origColor
+        if self.allBtn[numRow - 1][numCol]["state"] == "normal":
+            if self.allBtn[numRow - 1][numCol]["bg"] == "green":
+                self.minesInFiledCopy += 1
+                self.allBtn[numRow - 1][numCol]["bg"] = self.origColor
 
-        elif self.allBtn[numRow - 1][numCol]['text'] == '     ' and \
-                self.allBtn[numRow - 1][numCol]["state"] == "normal":
-            self.allBtn[numRow - 1][numCol]["bg"] = "green"
-            self.minesInFiledCopy -= 1
-        self.amountMinesLabel.configure(text=f'{self.minesInFiledCopy}')
-        self.isWinning()
+            elif self.allBtn[numRow - 1][numCol]['text'] == '     ':
+                self.allBtn[numRow - 1][numCol]["bg"] = "green"
+                self.minesInFiledCopy -= 1
+            self.amountMinesLabel.configure(text=f'{self.minesInFiledCopy}')
+            self.isWinning()
 
     def isWinning(self):
         if self.countClick == (self.buttonInRows * self.buttonInColumns) - self.minesInFiled:
