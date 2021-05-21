@@ -1,5 +1,5 @@
-from usefulFunctions import clearMenuWindow, clearGameWindow, createField, howManyMines, howManyZero, whatIsColor
-from tkinter import Label, Button, Entry, END, StringVar, messagebox, PhotoImage
+from tkinter import Label, Entry, StringVar, messagebox
+from usefulFunctions import *
 
 
 class CreateFrame:
@@ -147,9 +147,9 @@ class CreateFrame:
         textBox1 = Entry(self.root, width=5, textvariable=customHeight, justify='center')
         textBox2 = Entry(self.root, width=5, textvariable=customWidth, justify='center')
         textBox3 = Entry(self.root, width=5, textvariable=customMines, justify='center')
-        textBox1.insert(END, '16')
-        textBox2.insert(END, '30')
-        textBox3.insert(END, '145')
+        textBox1.insert('end', '16')
+        textBox2.insert('end', '30')
+        textBox3.insert('end', '145')
         textBox1.grid(row=5, column=0, padx=4)
         textBox2.grid(row=5, column=1, padx=4)
         textBox3.grid(row=5, column=2, padx=4)
