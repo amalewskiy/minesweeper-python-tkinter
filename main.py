@@ -15,5 +15,5 @@ if __name__ == "__main__":
     ox = root.winfo_screenwidth() / 2
     oy = root.winfo_screenheight() / 2
     root.geometry(f'+{int(ox - 400)}+{int(oy - 345)}')
-    apk = MainApplication(root)
+    MainApplication(root)
     root.mainloop()

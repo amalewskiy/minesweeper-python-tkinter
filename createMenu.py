@@ -1,5 +1,5 @@
 from usefulFunctions import clearMenuWindow, clearGameWindow, createField, howManyMines, howManyZero, whatIsColor
-from tkinter import Label, Button, Entry, END, StringVar, messagebox
+from tkinter import Label, Button, Entry, END, StringVar, messagebox, PhotoImage
 
 
 class CreateFrame:
@@ -22,7 +22,7 @@ class CreateFrame:
                 self.minesInFiledCopy += 1
                 self.allBtn[numRow - 1][numCol]["bg"] = self.origColor
 
-            elif self.allBtn[numRow - 1][numCol]['text'] == '     ':
+            elif self.allBtn[numRow - 1][numCol]["text"] == '     ':
                 self.allBtn[numRow - 1][numCol]["bg"] = "green"
                 self.minesInFiledCopy -= 1
             self.amountMinesLabel.configure(text=f'{self.minesInFiledCopy}')
@@ -36,7 +36,7 @@ class CreateFrame:
                     self.allBtn[i][j]["state"] = "disabled"
 
     def identifyButton(self, numRow, numCol):
-        if self.allBtn[numRow - 1][numCol]['bg'] != 'green' and self.allBtn[numRow - 1][numCol]['bg'] == self.origColor:
+        if self.allBtn[numRow - 1][numCol]["bg"] != 'green' and self.allBtn[numRow - 1][numCol]["bg"] == self.origColor:
             if self.minesWeeperField[numRow][numCol + 1] == 1:
                 for i in range(1, self.buttonInRows + 1):
                     for j in range(self.buttonInColumns):
@@ -109,7 +109,8 @@ class CreateFrame:
                     self.minesInFiled = int(args[3].get())
             else:
                 messagebox.showerror('Invalid input', 'width & height min 4')
-                self.root.destroy()
+                self.refreshOrExitFrame(1)
+                return
         self.minesInFiledCopy = self.minesInFiled
 
         Button(self.root, text='Menu',
