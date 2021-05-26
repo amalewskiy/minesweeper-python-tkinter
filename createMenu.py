@@ -100,7 +100,7 @@ class CreateFrame:
             self.buttonInColumns = 30
             self.minesInFiled = 99
         elif args[0] == 'Custom':
-            if int(args[1].get()) > 4 and int(args[2].get()) > 4:
+            if int(args[1].get()) > 0 and int(args[2].get()) > 4 and int(args[3].get()) > 0:
                 self.buttonInRows = int(args[1].get())
                 self.buttonInColumns = int(args[2].get())
                 if int(args[3].get()) > int(args[1].get()) * int(args[2].get()):
@@ -108,7 +108,7 @@ class CreateFrame:
                 else:
                     self.minesInFiled = int(args[3].get())
             else:
-                messagebox.showerror('Invalid input', 'width & height min 4')
+                messagebox.showerror('Invalid input', 'Height min: 1\nWidth min: 5\nMines min: 1')
                 self.refreshOrExitFrame(1)
                 return
         self.minesInFiledCopy = self.minesInFiled
