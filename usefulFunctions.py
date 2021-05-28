@@ -85,7 +85,7 @@ def howManyZero(i, j, minesWeeperField, allBtn, oC, root):
 
 
 def exitApplication(root):
-    msgBox = messagebox.askquestion('Exit Application', 'Are you sure you want to exit the application?',
+    msgBox = messagebox.askquestion('Exit Application', 'Are you sure you want to exit?',
                                     icon='warning')
     if msgBox == 'yes':
         root.destroy()

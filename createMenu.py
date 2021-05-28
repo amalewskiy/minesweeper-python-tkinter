@@ -125,7 +125,6 @@ class CreateFrame:
                     self.minesInFiled = int(args[3].get())
             else:
                 messagebox.showerror('Invalid input', 'Height min: 1\nWidth min: 5\nMines min: 1')
-                self.refreshOrExitFrame(1)
                 return
         clearMenuWindow(self.root)
         self.root.title(args[0])
