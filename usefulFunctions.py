@@ -71,7 +71,7 @@ def aroundZero(i, j, minesWeeperField, allBtn, origColor, root):
                 txt = '     '
             else:
                 txt = str(amount)
-            allBtn[neighbor[0] - 1][neighbor[1]] = Button(root, text=txt, bg='gainsboro',
+            allBtn[neighbor[0] - 1][neighbor[1]] = Button(root, text=txt, bg='light gray',
                                                           fg=f'{whatIsColor(amount, origColor)}')
             allBtn[neighbor[0] - 1][neighbor[1]].grid(row=neighbor[0], column=neighbor[1], sticky="nsew")
 

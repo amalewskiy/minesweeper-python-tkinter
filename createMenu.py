@@ -11,6 +11,7 @@ class CreateFrame:
         self.minesInFiledCopy = 0
         self.countClick = 0
         self.origColor = 0
+        self.btnBgColor = 'light gray'
         self.allBtn = []
         self.minesWeeperField = []
         self.beginnerButton = Button()
@@ -33,7 +34,7 @@ class CreateFrame:
 
     def isWinning(self):
         if self.countClick == (self.buttonInRows * self.buttonInColumns) - self.minesInFiled:
-            Label(self.root, text="You won!", bg='gainsboro').grid(columnspan=self.buttonInColumns)
+            Label(self.root, text="You won!", bg=self.btnBgColor).grid(columnspan=self.buttonInColumns)
             for i in range(0, self.buttonInRows):
                 for j in range(self.buttonInColumns):
                     self.allBtn[i][j]["state"] = "disabled"
@@ -46,34 +47,34 @@ class CreateFrame:
                         if self.minesWeeperField[i][j + 1] == 1 and self.allBtn[i - 1][j]["bg"] != "green":
                             self.allBtn[i - 1][j]["bg"] = "red"
                         self.allBtn[i - 1][j]["state"] = "disabled"
-                resultLabel = Label(self.root, text="You lose!", bg='gainsboro')
+                resultLabel = Label(self.root, text="You lose!", bg=self.btnBgColor)
                 resultLabel.grid(columnspan=self.buttonInColumns)
                 return
             amount = howManyMines(numRow, numCol + 1, self.minesWeeperField)
             if amount == 0:
                 self.allBtn[numRow - 1][numCol].configure(text='     ')
-                self.allBtn[numRow - 1][numCol]["bg"] = "gainsboro"
+                self.allBtn[numRow - 1][numCol]["bg"] = self.btnBgColor
                 howManyZero(numRow, numCol + 1, self.minesWeeperField, self.allBtn, self.origColor, self.root)
                 self.countClick = 0
                 for i in range(0, self.buttonInRows):
                     for j in range(self.buttonInColumns):
-                        if self.allBtn[i][j]["bg"] == "gainsboro":
+                        if self.allBtn[i][j]["bg"] == self.btnBgColor:
                             self.countClick += 1
                 return
             self.allBtn[numRow - 1][numCol].configure(text=f"{amount}")
             self.allBtn[numRow - 1][numCol]["fg"] = f"{whatIsColor(amount, self.origColor)}"
-            self.allBtn[numRow - 1][numCol]["bg"] = "gainsboro"
+            self.allBtn[numRow - 1][numCol]["bg"] = self.btnBgColor
             self.countClick += 1
             self.isWinning()
 
     def newGame(self):
+        self.countClick = 0
         self.minesWeeperField = createField(self.buttonInRows, self.buttonInColumns, self.minesInFiled)
         for i in range(1, self.buttonInRows + 1):
             allBtnInRow = []
             for j in range(self.buttonInColumns):
                 allBtnInRow.append(Button(self.root, text='     ',
                                           command=lambda row=i, col=j: self.identifyButton(row, col)))
-                allBtnInRow[-1].bind('<Button-3>', lambda event, row=i, col=j: self.rightButton(row, col))
                 allBtnInRow[-1].grid(row=i, column=j, sticky="nsew")
             self.allBtn.append(allBtnInRow)
 
@@ -132,7 +133,7 @@ class CreateFrame:
         Button(self.root, text='Menu',
                command=lambda: self.refreshOrExitFrame(1)).grid(row=0, columnspan=2, sticky="nsew", ipady=4)
         self.root.bind("<Escape>", lambda event: self.refreshOrExitFrame(1))
-        Label(self.root, text='or ESC', bg='gainsboro').grid(row=0, column=2, columnspan=2)
+        Label(self.root, text='or ESC', bg=self.btnBgColor).grid(row=0, column=2, columnspan=2)
         Button(self.root, text='NG', command=self.refreshOrExitFrame).grid(
             row=0, column=self.buttonInColumns // 2, sticky="nsew", ipady=4)
         self.amountMinesLabel = Label(self.root, text=str(self.minesInFiled), font='10')
@@ -141,8 +142,8 @@ class CreateFrame:
 
     def createMenuFrame(self):
         self.root.title("Minesweeper")
-        self.root.configure(background='gainsboro')
-        Label(self.root, text='Minesweeper', bg='gainsboro', fg='red', font='Courier 28 bold').grid(row=0, column=0,
+        self.root.configure(background=self.btnBgColor)
+        Label(self.root, text='Minesweeper', bg=self.btnBgColor, fg='red', font='Courier 28 bold').grid(row=0, column=0,
                                                                                                     columnspan=3,
                                                                                                     sticky="nsew",
                                                                                                     pady=32)
@@ -169,9 +170,9 @@ class CreateFrame:
         self.textBox1.grid(row=5, column=0, padx=4)
         self.textBox2.grid(row=5, column=1, padx=4)
         self.textBox3.grid(row=5, column=2, padx=4)
-        Label(self.root, text='height', bg='gainsboro').grid(row=6, column=0)
-        Label(self.root, text='width', bg='gainsboro').grid(row=6, column=1)
-        Label(self.root, text='mines', bg='gainsboro').grid(row=6, column=2)
+        Label(self.root, text='height', bg=self.btnBgColor).grid(row=6, column=0)
+        Label(self.root, text='width', bg=self.btnBgColor).grid(row=6, column=1)
+        Label(self.root, text='mines', bg=self.btnBgColor).grid(row=6, column=2)
         self.root.bind("<Return>", lambda event, h=customHeight, w=customWidth, m=customMines: self.
                        createGameWindow('Custom', h, w, m))
         self.root.bind("<Escape>", lambda event: exitApplication(self.root))
