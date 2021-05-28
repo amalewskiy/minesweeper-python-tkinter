@@ -1,4 +1,4 @@
-from tkinter import Label, Entry, StringVar, messagebox
+from tkinter import Label, Entry, StringVar
 from usefulFunctions import *
 
 
@@ -15,6 +15,9 @@ class CreateFrame:
         self.minesWeeperField = []
         self.beginnerButton = Button()
         self.amountMinesLabel = Label()
+        self.textBox1 = Entry()
+        self.textBox2 = Entry()
+        self.textBox3 = Entry()
 
     def rightButton(self, numRow, numCol):
         if self.allBtn[numRow - 1][numCol]["state"] == "normal":
@@ -85,8 +88,6 @@ class CreateFrame:
             self.newGame()
 
     def createGameWindow(self, *args):
-        clearMenuWindow(self.root)
-        self.root.title(args[0])
         if args[0] == 'Beginner':
             self.buttonInRows = 9
             self.buttonInColumns = 9
@@ -100,6 +101,21 @@ class CreateFrame:
             self.buttonInColumns = 30
             self.minesInFiled = 99
         elif args[0] == 'Custom':
+            textBoxes = [self.textBox1, self.textBox2, self.textBox3]
+            isString = False
+            for i in range(1, len(args)):
+                try:
+                    int(args[i].get())
+                    textBoxes[i - 1].config(bg=self.origColor)
+                    textBoxes[i - 1].config(fg='black')
+                except ValueError:
+                    isString = True
+                    textBoxes[i - 1].config(bg='red')
+                    textBoxes[i - 1].config(fg='white')
+            if isString:
+                Label(self.root, text='Inputs values must be integer!', bg=self.origColor).grid(row=7, columnspan=3,
+                                                                                                sticky='ew')
+                return
             if int(args[1].get()) > 0 and int(args[2].get()) > 4 and int(args[3].get()) > 0:
                 self.buttonInRows = int(args[1].get())
                 self.buttonInColumns = int(args[2].get())
@@ -111,8 +127,9 @@ class CreateFrame:
                 messagebox.showerror('Invalid input', 'Height min: 1\nWidth min: 5\nMines min: 1')
                 self.refreshOrExitFrame(1)
                 return
+        clearMenuWindow(self.root)
+        self.root.title(args[0])
         self.minesInFiledCopy = self.minesInFiled
-
         Button(self.root, text='Menu',
                command=lambda: self.refreshOrExitFrame(1)).grid(row=0, columnspan=2, sticky="nsew", ipady=4)
         self.root.bind("<Escape>", lambda event: self.refreshOrExitFrame(1))
@@ -144,16 +161,18 @@ class CreateFrame:
         Button(self.root, text='Custom', font='Courier 14',
                command=lambda h=customHeight, w=customWidth, m=customMines:
                self.createGameWindow('Custom', h, w, m)).grid(row=4, column=0, columnspan=3, pady=4)
-        textBox1 = Entry(self.root, width=5, textvariable=customHeight, justify='center')
-        textBox2 = Entry(self.root, width=5, textvariable=customWidth, justify='center')
-        textBox3 = Entry(self.root, width=5, textvariable=customMines, justify='center')
-        textBox1.insert('end', '16')
-        textBox2.insert('end', '30')
-        textBox3.insert('end', '145')
-        textBox1.grid(row=5, column=0, padx=4)
-        textBox2.grid(row=5, column=1, padx=4)
-        textBox3.grid(row=5, column=2, padx=4)
+        self.textBox1 = Entry(self.root, width=5, textvariable=customHeight, justify='center')
+        self.textBox2 = Entry(self.root, width=5, textvariable=customWidth, justify='center')
+        self.textBox3 = Entry(self.root, width=5, textvariable=customMines, justify='center')
+        self.textBox1.insert('end', '16')
+        self.textBox2.insert('end', '30')
+        self.textBox3.insert('end', '145')
+        self.textBox1.grid(row=5, column=0, padx=4)
+        self.textBox2.grid(row=5, column=1, padx=4)
+        self.textBox3.grid(row=5, column=2, padx=4)
         Label(self.root, text='height', bg='gainsboro').grid(row=6, column=0)
         Label(self.root, text='width', bg='gainsboro').grid(row=6, column=1)
         Label(self.root, text='mines', bg='gainsboro').grid(row=6, column=2)
-        self.root.bind("<Escape>", lambda event: self.root.destroy())
+        self.root.bind("<Return>", lambda event, h=customHeight, w=customWidth, m=customMines: self.
+                       createGameWindow('Custom', h, w, m))
+        self.root.bind("<Escape>", lambda event: exitApplication(self.root))

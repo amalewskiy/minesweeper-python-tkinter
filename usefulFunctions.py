@@ -1,5 +1,5 @@
 from random import randint
-from tkinter import Button
+from tkinter import Button, messagebox
 
 
 def clearMenuWindow(root):
@@ -82,3 +82,10 @@ def howManyZero(i, j, minesWeeperField, allBtn, oC, root):
     if howManyMines(i, j, minesWeeperField) == 0:
         minesWeeperField[i][j] = -1
     aroundZero(i, j - 1, minesWeeperField, allBtn, oC, root)
+
+
+def exitApplication(root):
+    msgBox = messagebox.askquestion('Exit Application', 'Are you sure you want to exit the application?',
+                                    icon='warning')
+    if msgBox == 'yes':
+        root.destroy()
