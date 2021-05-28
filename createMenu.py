@@ -75,6 +75,7 @@ class CreateFrame:
             for j in range(self.buttonInColumns):
                 allBtnInRow.append(Button(self.root, text='     ',
                                           command=lambda row=i, col=j: self.identifyButton(row, col)))
+                allBtnInRow[-1].bind('<Button-3>', lambda event, row=i, col=j: self.rightButton(row, col))
                 allBtnInRow[-1].grid(row=i, column=j, sticky="nsew")
             self.allBtn.append(allBtnInRow)
 
