@@ -10,7 +10,7 @@ class TestInputValues(unittest.TestCase):
     menu.origColor = 'green'
 
     def test_Input_String(self):
-        """This test trying run custom program with string value"""
+        """This test is trying run custom program with a string value"""
         height = StringVar(self.root, 2)
         width = StringVar(self.root, 'two')
         mines = StringVar(self.root, 3)
@@ -19,7 +19,7 @@ class TestInputValues(unittest.TestCase):
         self.assertTrue('Invalid data type' in str(context.exception))
 
     def test_Input_Invalid_Data(self):
-        """This test trying run custom program with invalid value"""
+        """This test is trying run custom program with a invalid value"""
         height = StringVar(self.root, 0)
         width = StringVar(self.root, -45)
         mines = StringVar(self.root, 3)
@@ -28,7 +28,7 @@ class TestInputValues(unittest.TestCase):
         self.assertTrue('Invalid data' in str(context.exception))
 
     def test_Empty_Input(self):
-        """This test trying run custom program without values"""
+        """This test is trying run custom program without values"""
         height = StringVar(self.root)
         width = StringVar(self.root)
         mines = StringVar(self.root)
