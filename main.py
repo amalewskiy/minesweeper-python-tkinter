@@ -9,11 +9,11 @@ class MainApplication:
         self.menu.createMenuFrame()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     root = Tk()
     root.resizable(False, False)
     ox = root.winfo_screenwidth() / 2
     oy = root.winfo_screenheight() / 2
-    root.geometry(f'+{int(ox - 400)}+{int(oy - 345)}')
+    root.geometry(f'+{int(ox - 150)}+{int(oy - 150)}')
     MainApplication(root)
     root.mainloop()

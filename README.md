@@ -34,5 +34,8 @@ tekstowym lub w zależności od poziomu trudności.</li>
 <li>Gra kończy się po kliknięciu wszystkich pól bez min, lub oznaczeniu "tu jest mina", i program wywietla o tym na dole wiadomość.</li>  
 </ul>
 
-
+## Testy
+ 1. **test_Input_String** - ten test probuje rozpocząć gre w trybie "Custom" podając litery. 
+ 2. **test_Input_Invalid_Data** - ten test probuje rozpocząć gre w trybie "Custom" podając niepoprawne wartośći. 
+ 3. **test_Empty_Input**- ten test probuje rozpocząć gre w trybie "Custom" nie podając żadnych wartośći. 
 

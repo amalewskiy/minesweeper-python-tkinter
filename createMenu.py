@@ -21,53 +21,56 @@ class CreateFrame:
         self.textBox3 = Entry()
 
     def rightButton(self, numRow, numCol):
-        if self.allBtn[numRow - 1][numCol]["state"] == "normal":
-            if self.allBtn[numRow - 1][numCol]["bg"] == "green":
+        """This function works when the right mouse button is pressed and puts the flags (green square)."""
+        if self.allBtn[numRow - 1][numCol]['state'] == 'normal':
+            if self.allBtn[numRow - 1][numCol]['bg'] == 'green':
                 self.minesInFiledCopy += 1
-                self.allBtn[numRow - 1][numCol]["bg"] = self.origColor
-
-            elif self.allBtn[numRow - 1][numCol]["text"] == '     ':
-                self.allBtn[numRow - 1][numCol]["bg"] = "green"
+                self.allBtn[numRow - 1][numCol]['bg'] = self.origColor
+            elif self.allBtn[numRow - 1][numCol]['text'] == '     ':
+                self.allBtn[numRow - 1][numCol]['bg'] = 'green'
                 self.minesInFiledCopy -= 1
             self.amountMinesLabel.configure(text=f'{self.minesInFiledCopy}')
             self.isWinning()
 
     def isWinning(self):
+        """This function checks for a win."""
         if self.countClick == (self.buttonInRows * self.buttonInColumns) - self.minesInFiled:
-            Label(self.root, text="You won!", bg=self.btnBgColor).grid(columnspan=self.buttonInColumns)
+            Label(self.root, text='You won!', bg=self.btnBgColor).grid(columnspan=self.buttonInColumns)
             for i in range(0, self.buttonInRows):
                 for j in range(self.buttonInColumns):
-                    self.allBtn[i][j]["state"] = "disabled"
+                    self.allBtn[i][j]['state'] = 'disabled'
 
     def identifyButton(self, numRow, numCol):
-        if self.allBtn[numRow - 1][numCol]["bg"] != 'green' and self.allBtn[numRow - 1][numCol]["bg"] == self.origColor:
+        """This function checks the button for a mine."""
+        if self.allBtn[numRow - 1][numCol]['bg'] != 'green' and self.allBtn[numRow - 1][numCol]['bg'] == self.origColor:
             if self.minesWeeperField[numRow][numCol + 1] == 1:
                 for i in range(1, self.buttonInRows + 1):
                     for j in range(self.buttonInColumns):
-                        if self.minesWeeperField[i][j + 1] == 1 and self.allBtn[i - 1][j]["bg"] != "green":
-                            self.allBtn[i - 1][j]["bg"] = "red"
-                        self.allBtn[i - 1][j]["state"] = "disabled"
-                resultLabel = Label(self.root, text="You lose!", bg=self.btnBgColor)
+                        if self.minesWeeperField[i][j + 1] == 1 and self.allBtn[i - 1][j]['bg'] != 'green':
+                            self.allBtn[i - 1][j]['bg'] = 'red'
+                        self.allBtn[i - 1][j]['state'] = 'disabled'
+                resultLabel = Label(self.root, text='You lose!', bg=self.btnBgColor)
                 resultLabel.grid(columnspan=self.buttonInColumns)
                 return
             amount = howManyMines(numRow, numCol + 1, self.minesWeeperField)
             if amount == 0:
                 self.allBtn[numRow - 1][numCol].configure(text='     ')
-                self.allBtn[numRow - 1][numCol]["bg"] = self.btnBgColor
+                self.allBtn[numRow - 1][numCol]['bg'] = self.btnBgColor
                 howManyZero(numRow, numCol + 1, self.minesWeeperField, self.allBtn, self.origColor, self.root)
                 self.countClick = 0
                 for i in range(0, self.buttonInRows):
                     for j in range(self.buttonInColumns):
-                        if self.allBtn[i][j]["bg"] == self.btnBgColor:
+                        if self.allBtn[i][j]['bg'] == self.btnBgColor:
                             self.countClick += 1
                 return
-            self.allBtn[numRow - 1][numCol].configure(text=f"{amount}")
-            self.allBtn[numRow - 1][numCol]["fg"] = f"{whatIsColor(amount, self.origColor)}"
-            self.allBtn[numRow - 1][numCol]["bg"] = self.btnBgColor
+            self.allBtn[numRow - 1][numCol].configure(text=f'{amount}')
+            self.allBtn[numRow - 1][numCol]['fg'] = f'{whatIsColor(amount, self.origColor)}'
+            self.allBtn[numRow - 1][numCol]['bg'] = self.btnBgColor
             self.countClick += 1
             self.isWinning()
 
     def newGame(self):
+        """This function generate new field of buttons."""
         self.countClick = 0
         self.minesWeeperField = createField(self.buttonInRows, self.buttonInColumns, self.minesInFiled)
         for i in range(1, self.buttonInRows + 1):
@@ -76,10 +79,11 @@ class CreateFrame:
                 allBtnInRow.append(Button(self.root, text='     ',
                                           command=lambda row=i, col=j: self.identifyButton(row, col)))
                 allBtnInRow[-1].bind('<Button-3>', lambda event, row=i, col=j: self.rightButton(row, col))
-                allBtnInRow[-1].grid(row=i, column=j, sticky="nsew")
+                allBtnInRow[-1].grid(row=i, column=j, sticky='nsew')
             self.allBtn.append(allBtnInRow)
 
     def refreshOrExitFrame(self, goToMenu=0):
+        """This function clear game window depending on the requirement."""
         if goToMenu:
             clearGameWindow(self.root, self.allBtn, self.minesWeeperField, 1)
             self.createMenuFrame()
@@ -90,6 +94,7 @@ class CreateFrame:
             self.newGame()
 
     def createGameWindow(self, *args):
+        """This function create new game window depending on the requirement."""
         if args[0] == 'Beginner':
             self.buttonInRows = 9
             self.buttonInColumns = 9
@@ -117,7 +122,7 @@ class CreateFrame:
             if isString:
                 Label(self.root, text='Inputs values must be integer!', bg=self.origColor).grid(row=7, columnspan=3,
                                                                                                 sticky='ew')
-                return
+                raise Exception('Invalid data type')
             if int(args[1].get()) > 0 and int(args[2].get()) > 4 and int(args[3].get()) > 0:
                 self.buttonInRows = int(args[1].get())
                 self.buttonInColumns = int(args[2].get())
@@ -126,32 +131,34 @@ class CreateFrame:
                 else:
                     self.minesInFiled = int(args[3].get())
             else:
+                # Disable the line below when running tests
                 messagebox.showerror('Invalid input', 'Height min: 1\nWidth min: 5\nMines min: 1')
-                return
+                raise Exception('Invalid data')
         clearMenuWindow(self.root)
         self.root.title(args[0])
         self.minesInFiledCopy = self.minesInFiled
         Button(self.root, text='Menu',
-               command=lambda: self.refreshOrExitFrame(1)).grid(row=0, columnspan=2, sticky="nsew", ipady=4)
-        self.root.bind("<Escape>", lambda event: self.refreshOrExitFrame(1))
+               command=lambda: self.refreshOrExitFrame(1)).grid(row=0, columnspan=2, sticky='nsew', ipady=4)
+        self.root.bind('<Escape>', lambda event: self.refreshOrExitFrame(1))
         Label(self.root, text='or ESC', bg=self.btnBgColor).grid(row=0, column=2, columnspan=2)
         Button(self.root, text='NG', command=self.refreshOrExitFrame).grid(
-            row=0, column=self.buttonInColumns // 2, sticky="nsew", ipady=4)
+            row=0, column=self.buttonInColumns // 2, sticky='nsew', ipady=4)
         self.amountMinesLabel = Label(self.root, text=str(self.minesInFiled), font='10')
-        self.amountMinesLabel.grid(row=0, column=self.buttonInColumns - 2, sticky="nsew", columnspan=2, ipady=4)
+        self.amountMinesLabel.grid(row=0, column=self.buttonInColumns - 2, sticky='nsew', columnspan=2, ipady=4)
         self.newGame()
 
     def createMenuFrame(self):
-        self.root.title("Minesweeper")
+        """This function create new menu window."""
+        self.root.title('Minesweeper')
         self.root.configure(background=self.btnBgColor)
         Label(self.root, text='Minesweeper', bg=self.btnBgColor, fg='red', font='Courier 28 bold').grid(row=0, column=0,
-                                                                                                    columnspan=3,
-                                                                                                    sticky="nsew",
-                                                                                                    pady=32)
+                                                                                                        columnspan=3,
+                                                                                                        sticky='nsew',
+                                                                                                        pady=32)
         self.beginnerButton = Button(self.root, text='Beginner', font='Courier 14',
                                      command=lambda: self.createGameWindow('Beginner'))
         self.beginnerButton.grid(row=1, column=0, columnspan=3, pady=4)
-        self.origColor = self.beginnerButton.cget("background")
+        self.origColor = self.beginnerButton.cget('background')
         Button(self.root, text='Intermediate', font='Courier 14',
                command=lambda: self.createGameWindow('Intermediate')).grid(row=2, column=0, columnspan=3, pady=4)
         Button(self.root, text='Expert', font='Courier 14',
@@ -174,6 +181,6 @@ class CreateFrame:
         Label(self.root, text='height', bg=self.btnBgColor).grid(row=6, column=0)
         Label(self.root, text='width', bg=self.btnBgColor).grid(row=6, column=1)
         Label(self.root, text='mines', bg=self.btnBgColor).grid(row=6, column=2)
-        self.root.bind("<Return>", lambda event, h=customHeight, w=customWidth, m=customMines: self.
+        self.root.bind('<Return>', lambda event, h=customHeight, w=customWidth, m=customMines: self.
                        createGameWindow('Custom', h, w, m))
-        self.root.bind("<Escape>", lambda event: exitApplication(self.root))
+        self.root.bind('<Escape>', lambda event: exitApplication(self.root))
